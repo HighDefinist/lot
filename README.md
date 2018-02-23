@@ -4,7 +4,7 @@
 ### Requirements
 
 - C++11
-- [CMake](https://cmake.org/) (only necessary for building the example)
+- [CMake](https://cmake.org/) (only necessary for running the test)
 
 ### Installation
 
@@ -39,5 +39,3 @@ Unsupported ```vector``` methods:
 
 - insert, emplace, erase
 - lexicographic comparisons (==, !=, <, <=, >, >=)
-
-	example\simple\time_demo.cpp
