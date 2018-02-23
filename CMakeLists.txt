@@ -1,0 +1,12 @@
+cmake_minimum_required (VERSION 3.1)
+project("mz_lot")
+add_library(${PROJECT_NAME} INTERFACE)
+target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR}/include)
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(NOT hasParent)
+  include_directories(${PROJECT_SOURCE_DIR}/include)
+  add_executable(lot test/lot/lot.cpp)
+  enable_testing()
+  add_test(NAME lot_test COMMAND lot)
+endif()
+ 
