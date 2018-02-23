@@ -7,6 +7,8 @@
 #include <stdexcept>
 #include <memory>
 #include <iterator>
+#include <cstring>
+#include <algorithm>
 // "lot", a simplified, faster std::vector. Unlike std::vector or other STL containers, elements are constructed/destructed on internal memory reservation, instead of element insertion/removal/resizing. This means that an element returned by add() already has an undefined, but valid state (either the result of the default constructor, or whatever was the last content). "lot" has basic support for assignment and copy construction, as well as iterators for auto-loops. Move-assignment and -construction are in principle also supported, but Visual C++ appears to have some problems with that in some cases, so it cannot be fully confirmed that it works. If Acheck=true, the array operator uses boundary checks. Tnextsize controls the function which defines the memory allocation pattern during growth.
 
 // "lots" is an adapter which is specifically designed to make GPU memory transfers more pleasent to use, and make CPU debugging easier, by replacing the GPU-memory adapter with a ranged-checked CPU-memory adapter (assuming the rest of the GPU code is also available as CPU code)
@@ -108,8 +110,8 @@ namespace std {
       inli lot& operator=(const lot& l) { CopyFrom(l); return *this; }   // Copy assignment
       inli lot(lot&& l) : cap(l.cap),N(l.N),v(l.v) { l.N = 0; l.cap = 0; } // Move constructor
       inli lot& operator=(lot&& l) {                              // Move assignment
-        ::swap(v,l.v);
-        ::swap(cap,l.cap);
+        std::swap(v,l.v);
+        std::swap(cap,l.cap);
         N = l.N;
         l.N = 0;
         return *this;
@@ -206,14 +208,14 @@ namespace std {
     };
 
 
-    class pu_bad_alloc: public exception {
+    class pu_bad_alloc: public bad_alloc {
     public:
-      pu_bad_alloc(char const* const _Message) throw(): exception(_Message) {}
+      pu_bad_alloc() throw(): bad_alloc() {}
     };
 
-    class pu_runtime_error: public exception {
+    class pu_runtime_error: public runtime_error {
     public:
-      pu_runtime_error(char const* const _Message) throw(): exception(_Message) {}
+      pu_runtime_error(char const* const _Message) throw(): runtime_error(_Message) {}
     };
 
 
@@ -306,7 +308,7 @@ namespace std {
           if(newDevCap!=0)Adapter.DevCreate(newDevCap);
           if(Adapter.isInit()) devCap = newDevCap; else {
             devCap = 0;
-            throw pu_bad_alloc("Memory reservation on device failed");
+            throw pu_bad_alloc();
           }
         }
       }

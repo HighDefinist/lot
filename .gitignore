@@ -33,3 +33,5 @@
 
 # Misc
 /.vs
+/build
+.cmaketools.json
