@@ -1,5 +1,5 @@
 # lot
-**A faster replacement for lot without element construction and destruction on memory reserveration and freeing, rather than on element insertion and deletion. It also allows enabling or disabling range checks independent from compiler debugging settings, and using 32-bit indices for 64-bit system.**
+**A faster replacement for vector, but with element construction and destruction on memory reserveration and freeing, rather than on element insertion and deletion. It also allows enabling or disabling range checks independent from compiler debugging settings, and using 32-bit indices on 64-bit system.**
 
 ### Requirements
 
