@@ -13,8 +13,9 @@
 
 ### Tested on
 
-- Windows 10: Visual Studio 2017
-- Fedora Linux: Visual Studio Code
+- Visual Studio 2017
+- GCC 7.3.1
+- Clang 5.0.1
  
 ### Download 
 
