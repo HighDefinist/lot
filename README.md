@@ -21,7 +21,7 @@
 
 You can download the latest version of *lot* by cloning the GitHub repository:
 
-	git clone https://github.com/Solenism/lot.git
+	git clone https://github.com/HighDefinist/lot.git
 	
 ### Usage
 
