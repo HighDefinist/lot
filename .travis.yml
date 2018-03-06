@@ -59,6 +59,6 @@ script:
       lcov --directory . --capture --output-file coverage.info; 
       lcov --remove coverage.info '/usr/*' 'ext/*' 'test/*' 'tests/*' --output-file coverage.info; 
       lcov --list coverage.info; 
-      bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports";
+      bash <(curl -s https://codecov.io/bash) -t 12b626c8-b1ec-4fcc-8a72-3aab45141c63;
       echo "Codecov - Done";
     fi
