@@ -14,7 +14,7 @@
 
 
 #define CATCH_VERSION_MAJOR 2
-#define CATCH_VERSION_MINOR 1
+#define CATCH_VERSION_MINOR 1 
 #define CATCH_VERSION_PATCH 2
 
 #ifdef __clang__
@@ -11596,7 +11596,7 @@ namespace Catch {
         case Unit::Nanoseconds:
           return "ns";
         case Unit::Microseconds:
-          return "µs";
+          return "ï¿½s";
         case Unit::Milliseconds:
           return "ms";
         case Unit::Seconds:

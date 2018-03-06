@@ -104,11 +104,11 @@ namespace std {
       typedef Tv lot_type;
       // Constructors etc...
       inli ~lot() { Free(); }                                  // Default destructor
-      inli lot():cap(0),N(0) {}                                   // Default constructor
+      inli lot():N(0),cap(0) {}                                   // Default constructor
       inli lot(Tidx startN) : cap(0),N(0) { resize(startN); }       // Constructor with initial size
       inli lot(const lot& l) : lot() { CopyFrom(l); }                     // Copy constructor
       inli lot& operator=(const lot& l) { CopyFrom(l); return *this; }   // Copy assignment
-      inli lot(lot&& l) : cap(l.cap),N(l.N),v(l.v) { l.N = 0; l.cap = 0; } // Move constructor
+      inli lot(lot&& l) : N(l.N),cap(l.cap),v(l.v) { l.N = 0; l.cap = 0; } // Move constructor
       inli lot& operator=(lot&& l) {                              // Move assignment
         std::swap(v,l.v);
         std::swap(cap,l.cap);
@@ -116,7 +116,7 @@ namespace std {
         l.N = 0;
         return *this;
       }
-      inli lot(initializer_list<Tv> l):cap(0),N(0) {
+      inli lot(initializer_list<Tv> l):N(0),cap(0) {
         resize((Tidx)l.size());
         uninitialized_copy(l.begin(),l.end(),v); // Use placement new for initialization
       }
