@@ -1,3 +1,7 @@
+if (NOT MSVC)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+endif()
+
 # Setup test
 add_executable(the_test main.cpp)
 target_compile_features(the_test INTERFACE cxx_std_11)
