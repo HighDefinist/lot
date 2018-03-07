@@ -42,7 +42,7 @@ namespace std {
   namespace mz {
 
     template<typename Tidx> struct lot_nextsize {
-      Tidx nextsize(Tidx olds) const { return (Tidx)((double)olds*1.5)+4; }
+      Tidx nextsize(Tidx olds) const { return static_cast<Tidx>((static_cast<double>(olds)*1.5)+4); }
     };
 
     template <class Tv,bool Acheck = Acheck_def,class Tidx = ui32,class Tnextsize = lot_nextsize<Tidx>> class lot {
@@ -118,7 +118,7 @@ namespace std {
         return *this;
       }
       inli lot(initializer_list<Tv> l):N(0),cap(0) {
-        resize((Tidx)l.size());
+        resize(static_cast<Tidx>(l.size()));
         uninitialized_copy(l.begin(),l.end(),v); // Use placement new for initialization
       }
 
@@ -155,7 +155,7 @@ namespace std {
         if (ncap == cap) return;
         Tv* w;
         if (ncap != 0) {
-          w = (Tv*)malloc(sizeof(Tv)*ncap);
+          w = reinterpret_cast<Tv*>(malloc(sizeof(Tv)*ncap));
           memcpy(&w[0], &v[0], sizeof(Tv)*MZ_min(cap,ncap));// Copy content of elements, which should be in both memory areas
           for (Tidx i = cap; i < ncap; i++) new(&w[i]) Tv; // Placement new, to manually call the constructor
         }
@@ -198,7 +198,7 @@ namespace std {
         return &v[N - 1];
       }
       template<typename ...Args> inli void Add(Args ...args) {
-        auto nn = (Tidx)sizeof...(Args);
+        auto nn = static_cast<Tidx>(sizeof...(Args));
         resize(N + nn);
         fill_up(args...);
       }
@@ -228,13 +228,13 @@ namespace std {
         data = nullptr;
       }
       void DevCreate(Tidx cap) {
-        data = (Tv*)malloc(sizeof(Tv)*cap);
+        data = reinterpret_cast<Tv*>(malloc(sizeof(Tv)*cap));
       }
       void CopyDevFromHost(Tv* v,Tidx start,Tidx N) {
-        memcpy((Tv*)data+start,&v[start],sizeof(Tv)*N);
+        memcpy(data+start,&v[start],sizeof(Tv)*N);
       }
       void CopyHostFromDev(Tv* v,Tidx start,Tidx N) {
-        memcpy(&v[start],(Tv*)data+start,sizeof(Tv)*N);
+        memcpy(&v[start],data+start,sizeof(Tv)*N);
       }
       bool isInit() {
         return data!=nullptr;
