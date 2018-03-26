@@ -26,12 +26,12 @@ if [ $? -ne 0 ]; then
     exit 3
 fi
 
-showinfo "Running tests ..."
+showinfo "Testing coverage ..."
 make -j8 setup_coverage
-ctest
-if [ $? -ne 0 ]; then
-    error "Error: there are failed tests!"
-    exit 4
-fi
+
+showinfo "Summarizing coverage ..."
+lcov --directory . --capture --output-file lcov.info
+lcov --remove lcov.info '/usr/*' 'ext/*' 'test/*' 'tests/*' --output-file lcov.info
 
 workingprocess "All tests compile and pass."
+
